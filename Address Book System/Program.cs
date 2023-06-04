@@ -18,7 +18,7 @@ namespace Address_Book_System
             {
                 Console.WriteLine("Address Book Menu");
                 Console.WriteLine("--------------------");
-                Console.WriteLine(" 1. Add Contact\n 2. Display All Contacts\n 3. Edit Contact\n 4. Exit");
+                Console.WriteLine(" 1. Add Contact\n 2. Display All Contacts\n 3. Edit Contact\n 4. Delete Contact\n 5. Exit");
 
                 Console.WriteLine("Enter your choice: ");
                 int choice = Convert.ToInt32(Console.ReadLine());
@@ -35,6 +35,9 @@ namespace Address_Book_System
                         addressBook.EditContact();
                         break;
                     case 4:
+                        addressBook.DeleteContact();
+                        break;
+                    case 5:
                         exit = true;
                         break;
                     default:
@@ -139,6 +142,28 @@ namespace Address_Book_System
                 contactToEdit.Email = Console.ReadLine();
 
                 Console.WriteLine("Contact updated successfully");
+            }
+            else
+            {
+                Console.WriteLine("Contact not found");
+            }
+        }
+
+        public void DeleteContact()
+        {
+            Console.WriteLine("Enter the name of the contact you want to delete");
+            Console.WriteLine("First Name: ");
+            string firstName = Console.ReadLine();
+
+            Console.WriteLine("Last Name: ");
+            string lastName = Console.ReadLine();
+
+            Contact contactToDelete = Contacts.Find(c => c.FirstName == firstName && c.LastName == lastName);
+
+            if (contactToDelete != null)
+            {
+                Contacts.Remove(contactToDelete);
+                Console.WriteLine("Contact deleted successfully");
             }
             else
             {

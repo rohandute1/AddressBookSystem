@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,8 +12,104 @@ namespace Address_Book_System
         static void Main()
         {
             Console.WriteLine("Welcome to Address Book Program");
-            AddressBook addressBook = new AddressBook();
+            Dictionary<string, AddressBook> addressBooks = new Dictionary<string, AddressBook>();
 
+            bool exit = false;
+            while (!exit)
+            {
+                Console.WriteLine("Address Book Menu");
+                Console.WriteLine("--------------------");
+                Console.WriteLine(" 1. Create Address Book\n 2. Open Address Book\n 3. Add Contact\n 4. Display All Contacts\n 5. Edit Contact\n 6. Delete Contact\n 7. Exit");
+
+                Console.WriteLine("Enter your choice: ");
+                int choice = Convert.ToInt32(Console.ReadLine());
+
+                switch (choice)
+                {
+                    case 1:
+                        Console.WriteLine("Enter Address Book Name: ");
+                        string addressBookName = Console.ReadLine();
+                        addressBooks[addressBookName] = new AddressBook();
+                        Console.WriteLine($"Address Book '{addressBookName}' created successfully");
+                        break;
+                    case 2:
+                        Console.WriteLine("Enter Address Book Name: ");
+                        string openAddressBookName = Console.ReadLine();
+                        if (addressBooks.ContainsKey(openAddressBookName))
+                        {
+                            AddressBook openAddressBook = addressBooks[openAddressBookName];
+                            OpenAddressBookMenu(openAddressBook);
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Address Book '{openAddressBookName}' does not exist");
+                        }
+                        break;
+                    case 3:
+                        Console.WriteLine("Enter Address Book Name: ");
+                        string addContactAddressBookName = Console.ReadLine();
+                        if (addressBooks.ContainsKey(addContactAddressBookName))
+                        {
+                            AddressBook addContactAddressBook = addressBooks[addContactAddressBookName];
+                            addContactAddressBook.AddContact();
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Address Book '{addContactAddressBookName}' does not exist");
+                        }
+                        break;
+                    case 4:
+                        Console.WriteLine("Enter Address Book Name: ");
+                        string displayContactsAddressBookName = Console.ReadLine();
+                        if (addressBooks.ContainsKey(displayContactsAddressBookName))
+                        {
+                            AddressBook displayContactsAddressBook = addressBooks[displayContactsAddressBookName];
+                            displayContactsAddressBook.DisplayContacts();
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Address Book '{displayContactsAddressBookName}' does not exist");
+                        }
+                        break;
+                    case 5:
+                        Console.WriteLine("Enter Address Book Name: ");
+                        string editContactAddressBookName = Console.ReadLine();
+                        if (addressBooks.ContainsKey(editContactAddressBookName))
+                        {
+                            AddressBook editContactAddressBook = addressBooks[editContactAddressBookName];
+                            editContactAddressBook.EditContact();
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Address Book '{editContactAddressBookName}' does not exist");
+                        }
+                        break;
+                    case 6:
+                        Console.WriteLine("Enter Address Book Name: ");
+                        string deleteContactAddressBookName = Console.ReadLine();
+                        if (addressBooks.ContainsKey(deleteContactAddressBookName))
+                        {
+                            AddressBook deleteContactAddressBook = addressBooks[deleteContactAddressBookName];
+                            deleteContactAddressBook.DeleteContact();
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Address Book '{deleteContactAddressBookName}' does not exist");
+                        }
+                        break;
+                    case 7:
+                        exit = true;
+                        break;
+                    default:
+                        Console.WriteLine("Invalid choice. Please try again.");
+                        break;
+                }
+                Console.WriteLine();
+            }
+        }
+
+        static void OpenAddressBookMenu(AddressBook addressBook)
+        {
             bool exit = false;
             while (!exit)
             {
